@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mood_predictor">Mood Predictor</string>
+    <string name="configure_manually">Configure Manually</string>
+    <string name="subhead">Let your mood predict the playlist!</string>
+</resources>
