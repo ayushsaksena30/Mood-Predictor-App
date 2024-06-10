@@ -1,0 +1,1 @@
+MoodPredictor is an app leveraging facial recognition from images or videos to identify user moods and recommend corresponding songs. It features real-time mood detection and a customizable mood selection option, ensuring personalized music recommendations tailored to both detected and manually chosen emotional states.
