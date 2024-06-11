@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moodpredictorapp.Item
 import com.example.moodpredictorapp.R
 
-class MyAdapter(private val itemList: List<Item>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(
+    private val itemList: List<Item>,
+    private val onClick: (View, Int) -> Unit
+) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.textView)
@@ -23,9 +26,11 @@ class MyAdapter(private val itemList: List<Item>) : RecyclerView.Adapter<MyAdapt
         val item = itemList[position]
         holder.textView.text = item.text
         holder.imageView.setImageResource(item.imageResId)
+
+        holder.itemView.setOnClickListener {
+            onClick(holder.itemView, position)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    override fun getItemCount(): Int = itemList.size
 }

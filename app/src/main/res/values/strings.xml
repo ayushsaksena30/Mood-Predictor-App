@@ -8,4 +8,5 @@
     <string name="next">Next</string>
     <string name="logo">logo</string>
     <string name="select_your_mood">Select your Mood</string>
+    <string name="mood_display">Sample Text</string>
 </resources>
