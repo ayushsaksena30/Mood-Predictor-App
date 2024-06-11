@@ -18,6 +18,14 @@ class MainActivity : AppCompatActivity() {
         btn_configure.setOnClickListener {
             val intent= Intent(this, ConfigureMenu::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_up, 0)
+        }
+
+        val btn_next = findViewById<Button>(R.id.btn_next)
+        btn_next.setOnClickListener {
+            val intent= Intent(this, MoodDetector::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_up, 0)
         }
     }
 }
