@@ -9,4 +9,5 @@
     <string name="logo">logo</string>
     <string name="select_your_mood">Select your Mood</string>
     <string name="mood_display">Sample Text</string>
+    <string name="place_your_face_inside_the_box">Place your face inside the box :</string>
 </resources>

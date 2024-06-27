@@ -3,4 +3,5 @@
     <string name="mood_predictor">Mood Predictor</string>
     <string name="configure_manually">Configure Manually</string>
     <string name="subhead">Let your mood predict the playlist!</string>
+    <string name="place_your_face_inside_the_box">Place your face inside the box :</string>
 </resources>
