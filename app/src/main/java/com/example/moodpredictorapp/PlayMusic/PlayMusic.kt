@@ -21,7 +21,8 @@ class PlayMusic : AppCompatActivity() {
         val youtubeButton = findViewById<AppCompatButton>(R.id.youtubeButton)
 
         val mood = intent.getStringExtra("mood")
-        val selectedCategory = intent.getStringExtra("selected_category")
+        var selectedCategory = intent.getStringExtra("selected_category")
+        if(selectedCategory==null) selectedCategory=""
         moodTextView.text = "Your Mood: $mood"
         subcatMood.text = "Subcategory: $selectedCategory"
 
