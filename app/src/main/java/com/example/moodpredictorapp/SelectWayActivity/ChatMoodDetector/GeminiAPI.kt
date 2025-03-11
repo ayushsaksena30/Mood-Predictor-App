@@ -15,7 +15,7 @@ class GeminiAPI {
         .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
         .build()
 
-    private val apiKey = "YOUR_API_KEY" // Replace with your actual API key
+    private val apiKey = "YOUR_API" // Replace with your actual API key
     private val baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
     private var conversationHistory = "" // Stores conversation history
 

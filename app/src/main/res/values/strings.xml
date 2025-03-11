@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mood Predictor App</string>
+    <string name="app_name">Mood Predictor</string>
     <string name="mood_predictor">Mood Predictor</string>
     <string name="leave_type">Sick Leave</string>
     <string name="application_status">Pending</string>

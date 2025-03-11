@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/chat_bubble_bot"
         android:gravity="start"
-        android:maxWidth="200dp"
+        android:maxWidth="250dp"
         android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="parent"
         android:padding="12dp"

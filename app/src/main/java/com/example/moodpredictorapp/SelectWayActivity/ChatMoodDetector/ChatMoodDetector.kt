@@ -95,6 +95,7 @@ class ChatMoodDetector : AppCompatActivity() {
                             intent.putExtra("selected_item_name", mood)
 
                             startActivity(intent)
+                            overridePendingTransition(R.anim.slide_up, 0)
                         } else {
                             addMessage(response, isUser = false) // Display general message
                         }

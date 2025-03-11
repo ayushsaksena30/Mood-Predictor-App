@@ -38,7 +38,8 @@
 
             <TextView
                 android:id="@+id/tv_chat"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="128dp"
@@ -49,11 +50,12 @@
                 android:background="@color/background_app"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_selectmethod" />
+                app:layout_constraintTop_toBottomOf="@id/tv_selectmethod" />
 
             <TextView
                 android:id="@+id/tv_image"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="48dp"
@@ -68,7 +70,8 @@
 
             <TextView
                 android:id="@+id/tv_takeatest"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="48dp"

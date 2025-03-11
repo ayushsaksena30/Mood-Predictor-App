@@ -131,6 +131,7 @@ class TakeATestMoodDetector : AppCompatActivity() {
         val intent = Intent(this, SelectedMoodResult::class.java)
         intent.putExtra("selected_item_name", dominantMood)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_up, 0)
         finish()
     }
     override fun onBackPressed() {

@@ -22,7 +22,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_configure"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
         android:background="@drawable/btn_custom"
@@ -36,7 +36,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:text="@string/next"

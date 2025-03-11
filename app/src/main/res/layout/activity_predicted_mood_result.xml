@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_app"
-    tools:context=".MoodDetector">
+    tools:context=".SelectWayResult.PredictedImageMoodResult">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -47,10 +47,11 @@
 
             <TextView
                 android:id="@+id/tv_mood"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-black"
                 android:padding="12sp"
+                android:textAlignment="center"
                 android:text="Mood"
                 android:textSize="48sp"
                 android:layout_marginTop="48dp"

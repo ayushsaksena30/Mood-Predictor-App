@@ -39,7 +39,6 @@ class ConfigureMenu : AppCompatActivity() {
         )
 
         val adapter = MyAdapter(itemList) { itemName ->
-            // Handle click and start the next activity
             val intent = Intent(this@ConfigureMenu, SelectedMoodResult::class.java).apply {
                 putExtra("selected_item_name", itemName)
             }

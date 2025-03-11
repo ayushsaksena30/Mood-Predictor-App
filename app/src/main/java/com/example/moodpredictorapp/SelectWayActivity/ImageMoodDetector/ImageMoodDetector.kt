@@ -3,25 +3,25 @@ package com.example.moodpredictorapp.SelectWayActivity.ImageMoodDetector
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.*
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.ImageProxy
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
-import com.example.moodpredictorapp.SelectWayResult.PredictedImageMoodResult
 import com.example.moodpredictorapp.R
+import com.example.moodpredictorapp.SelectWayResult.PredictedImageMoodResult
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import android.util.Base64
-import android.util.Log
 
 class ImageMoodDetector : AppCompatActivity() {
 
@@ -143,6 +143,7 @@ class ImageMoodDetector : AppCompatActivity() {
                         putExtra("image_base64", currentBase64Image)
                     }
                     startActivity(intent)
+                    overridePendingTransition(R.anim.slide_up, 0)
                 }
             }
 
