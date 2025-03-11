@@ -14,10 +14,14 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import com.example.moodpredictorapp.SelectWayResult.PredictedImageMoodResult
 import com.example.moodpredictorapp.R
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import android.util.Base64
+import android.util.Log
 
 class ImageMoodDetector : AppCompatActivity() {
 
@@ -29,6 +33,7 @@ class ImageMoodDetector : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private var cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
+    private var currentBase64Image: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +44,9 @@ class ImageMoodDetector : AppCompatActivity() {
         switchCameraButton = findViewById(R.id.switchCameraButton)
         btn_uploading = findViewById(R.id.btn_uploadimg)
 
-        // Initialize camera executor
         cameraExecutor = Executors.newSingleThreadExecutor()
-
-        // Start the camera
         startCamera()
 
-        // Set click listener for switching cameras
         switchCameraButton.setOnClickListener {
             cameraSelector = if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
                 CameraSelector.DEFAULT_FRONT_CAMERA
@@ -55,12 +56,10 @@ class ImageMoodDetector : AppCompatActivity() {
             startCamera()
         }
 
-        // Set click listener for the capture button
         captureButton.setOnClickListener {
             takePhoto()
         }
 
-        // Set click listener for the upload button
         btn_uploading.setOnClickListener {
             openGallery()
         }
@@ -78,14 +77,11 @@ class ImageMoodDetector : AppCompatActivity() {
 
         if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             val selectedImageUri = data.data
+
             if (selectedImageUri != null) {
-                // Pass the URI to the next activity
-                val intent = Intent(this, PredictedImageMoodResult::class.java).apply {
-                    putExtra("photo_uri", selectedImageUri.toString())
-                }
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
+                val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(selectedImageUri))
+                val base64Image = encodeImageToBase64(bitmap)
+                sendImageToGemini(base64Image)
             }
         }
     }
@@ -99,15 +95,12 @@ class ImageMoodDetector : AppCompatActivity() {
                 it.setSurfaceProvider(previewView.surfaceProvider)
             }
 
-            // Configure ImageCapture use case
             imageCapture = ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .build()
 
             try {
                 cameraProvider.unbindAll()
-
-                // Bind use cases to lifecycle
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
             } catch (e: Exception) {
                 Toast.makeText(this, "Failed to initialize camera.", Toast.LENGTH_SHORT).show()
@@ -123,19 +116,8 @@ class ImageMoodDetector : AppCompatActivity() {
                 override fun onCaptureSuccess(image: ImageProxy) {
                     val bitmap = imageProxyToBitmap(image)
                     image.close()
-
-                    // Save the Bitmap to a temporary file
-                    val uri = saveBitmapToCache(bitmap)
-
-                    if (uri != null) {
-                        // Pass the URI to the next activity
-                        val intent = Intent(this@ImageMoodDetector, PredictedImageMoodResult::class.java).apply {
-                            putExtra("photo_uri", uri.toString())
-                        }
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(applicationContext, "Failed to save image", Toast.LENGTH_SHORT).show()
-                    }
+                    val base64Image = encodeImageToBase64(bitmap)
+                    sendImageToGemini(base64Image)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -144,19 +126,44 @@ class ImageMoodDetector : AppCompatActivity() {
             })
     }
 
-    private fun saveBitmapToCache(bitmap: Bitmap): Uri? {
+    private fun sendImageToGemini(base64Image: String?) {
+        if (base64Image == null) {
+            Toast.makeText(this, "Base64 Encoding Failed", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        currentBase64Image = base64Image
+
+        val geminiAPI = GeminiImageAPI()
+        geminiAPI.analyzeImage(base64Image, object : GeminiImageAPI.ResponseCallback {
+            override fun onSuccess(response: String) {
+                runOnUiThread {
+                    val intent = Intent(this@ImageMoodDetector, PredictedImageMoodResult::class.java).apply {
+                        putExtra("gemini_response", response)
+                        putExtra("image_base64", currentBase64Image)
+                    }
+                    startActivity(intent)
+                }
+            }
+
+            override fun onFailure(exception: IOException) {
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "Gemini API Error: ${exception.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+    }
+
+    private fun encodeImageToBase64(bitmap: Bitmap): String? {
         return try {
-            val cacheDir = File(cacheDir, "images")
-            cacheDir.mkdirs() // Create the directory if it doesn't exist
-            val file = File(cacheDir, "captured_image_${System.currentTimeMillis()}.jpg")
-            val outputStream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-            outputStream.flush()
-            outputStream.close()
-            Uri.fromFile(file)
+            val resizedBitmap = Bitmap.createScaledBitmap(bitmap, 320, 240, true)
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream)
+            val byteArray = byteArrayOutputStream.toByteArray()
+            return Base64.encodeToString(byteArray, Base64.NO_WRAP)
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            return null
         }
     }
 
