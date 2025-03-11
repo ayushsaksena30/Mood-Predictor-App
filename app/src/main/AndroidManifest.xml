@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,16 +21,28 @@
         android:theme="@style/Theme.MoodPredictorApp"
         tools:targetApi="31">
         <activity
-            android:name=".LeaveFormActivity"
+            android:name=".SelectWayActivity.TakeATestMoodDetector.TakeATestMoodDetector"
             android:exported="false" />
         <activity
-            android:name=".MoodDetector"
+            android:name=".SelectWayActivity.ChatMoodDetector.ChatMoodDetector"
             android:exported="false" />
         <activity
-            android:name=".ConfigureMenu"
+            android:name=".SelectWayActivity.SelectWay"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ConfigureMenuResult.SelectedMoodResult"
+            android:exported="false" />
+        <activity
+            android:name=".SelectWayResult.PredictedImageMoodResult"
+            android:exported="false" />
+        <activity
+            android:name=".SelectWayActivity.ImageMoodDetector.ImageMoodDetector"
+            android:exported="false" />
+        <activity
+            android:name=".ConfigureMenu.ConfigureMenu"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

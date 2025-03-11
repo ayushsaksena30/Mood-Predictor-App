@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_app"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity.MainActivity">
 
     <TextView
         android:id="@+id/textView2"
@@ -40,7 +40,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:text="@string/next"
-        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/btn_configure"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/btn_custom"

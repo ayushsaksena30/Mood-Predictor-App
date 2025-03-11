@@ -1,15 +1,16 @@
+package com.example.moodpredictorapp.ConfigureMenu
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.moodpredictorapp.Item
 import com.example.moodpredictorapp.R
 
 class MyAdapter(
     private val itemList: List<Item>,
-    private val onClick: (View, Int) -> Unit
+    private val onClick: (String) -> Unit // Pass the item name instead of view and position
 ) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -28,7 +29,7 @@ class MyAdapter(
         holder.imageView.setImageResource(item.imageResId)
 
         holder.itemView.setOnClickListener {
-            onClick(holder.itemView, position)
+            onClick(item.text) // Pass the item name to the callback
         }
     }
 

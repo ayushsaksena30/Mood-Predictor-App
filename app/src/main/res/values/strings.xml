@@ -10,4 +10,8 @@
     <string name="select_your_mood">Select your Mood</string>
     <string name="mood_display">Sample Text</string>
     <string name="place_your_face_inside_the_box">Place your face inside the box :</string>
+    <string name="wait_message">Please wait a moment before sending another message.</string>
+    <string name="analyzing_mood">Analyzing overall mood based on our conversation…</string>
+    <string name="no_conversation">No conversation history to analyze mood.</string>
+    <string name="mood_analysis_failed">Failed to analyze mood. Please try again.</string>
 </resources>

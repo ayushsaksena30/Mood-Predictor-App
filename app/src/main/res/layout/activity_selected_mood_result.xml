@@ -24,49 +24,43 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_selectsource"
+                android:id="@+id/tv_moodSelected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="28dp"
                 android:fontFamily="sans-serif-black"
                 android:padding="12sp"
-                android:text="Select source"
+                android:text="Current Mood"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <VideoView
-                android:id="@+id/videoView"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+            <TextView
+                android:id="@+id/tv_mood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="128dp"
+                android:fontFamily="sans-serif-black"
+                android:padding="12sp"
+                android:text="Mood"
+                android:textSize="48sp"
+                android:background="@color/background_app"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_selectsource" />
+                app:layout_constraintTop_toBottomOf="@id/tv_moodSelected" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_uploadimg"
+                android:id="@+id/btn_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="30dp"
                 android:background="@drawable/btn_custom"
-                android:padding="20dp"
-                android:text="Upload Image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/videoView" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="NEXT"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:background="@drawable/btn_custom"
-                app:layout_constraintTop_toBottomOf="@+id/btn_uploadimg" />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

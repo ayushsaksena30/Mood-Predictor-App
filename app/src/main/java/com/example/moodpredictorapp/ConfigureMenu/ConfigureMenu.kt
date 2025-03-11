@@ -1,14 +1,15 @@
-package com.example.moodpredictorapp
+package com.example.moodpredictorapp.ConfigureMenu
 
-import MyAdapter
+import android.content.Intent
 import android.os.Bundle
-import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.moodpredictorapp.R
+import com.example.moodpredictorapp.ConfigureMenuResult.SelectedMoodResult
 
 class ConfigureMenu : AppCompatActivity() {
     override fun onBackPressed() {
@@ -37,15 +38,14 @@ class ConfigureMenu : AppCompatActivity() {
             Item("Neutral", R.drawable.relax_png)
         )
 
-        val adapter = MyAdapter(itemList){ view, position ->
-            // Perform the click animation
-            val animation = AnimationUtils.loadAnimation(this, R.anim.item_click_animation)
-            view.startAnimation(animation)
-
-            // Scroll to the center
-            (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, recyclerView.height / 2 - view.height / 2)
+        val adapter = MyAdapter(itemList) { itemName ->
+            // Handle click and start the next activity
+            val intent = Intent(this@ConfigureMenu, SelectedMoodResult::class.java).apply {
+                putExtra("selected_item_name", itemName)
+            }
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_up, 0)
         }
         recyclerView.adapter = adapter
-
     }
 }
