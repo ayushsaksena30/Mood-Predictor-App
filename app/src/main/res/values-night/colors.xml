@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="white">#FF000000</color>
+    <color name="black">#FFFFFFFF</color>
+    <color name="grey">#9095A0</color>
     <color name="background_app">#BCA28C</color>
+    <color name="yellow">#FFFF6C</color>
+    <color name="blue">#82B1FF</color>
+    <color name="red">#F24435</color>
+    <color name="bright_yellow">#C09D60</color>
+    <color name="configure_menu_card_background">#C0B8B0</color>
+    <color name="first_color_btn_custom">#BEAEBBD5</color>
+    <color name="second_color_btn_custom">#D0BAA8</color>
 </resources>

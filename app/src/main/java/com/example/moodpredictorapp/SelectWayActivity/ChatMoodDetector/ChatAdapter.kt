@@ -9,7 +9,7 @@ import com.example.moodpredictorapp.R
 
 data class ChatMessage(
     val message: String,
-    val isUser: Boolean
+    val isUser: Any
 )
 
 class ChatAdapter(private val messages: List<ChatMessage>) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
@@ -29,13 +29,13 @@ class ChatAdapter(private val messages: List<ChatMessage>) : RecyclerView.Adapte
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (messages[position].isUser) 1 else 0
+        return if (messages[position].isUser as Boolean) 1 else 0
     }
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val message = messages[position]
         holder.messageText.text = message.message
-        val alignment = if (message.isUser) View.TEXT_ALIGNMENT_TEXT_END else View.TEXT_ALIGNMENT_TEXT_START
+        val alignment = if (message.isUser as Boolean) View.TEXT_ALIGNMENT_TEXT_END else View.TEXT_ALIGNMENT_TEXT_START
         holder.messageText.textAlignment = alignment
     }
 

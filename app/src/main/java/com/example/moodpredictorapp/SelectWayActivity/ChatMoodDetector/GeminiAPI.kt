@@ -15,17 +15,17 @@ class GeminiAPI {
         .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
         .build()
 
-    private val apiKey = "YOUR_API" // Replace with your actual API key
+    private val apiKey = "YOUR_KEY" // Replace with your actual API key
     private val baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
-    private var conversationHistory = "" // Stores conversation history
+    private var conversationHistory = ""
 
     fun generateReply(userInput: String, isAnalyzingMood: Boolean, callback: ResponseCallback) {
         addToConversationHistory("User", userInput)
 
         val prompt = if (isAnalyzingMood) {
-            buildPrompt(conversationHistory) + "\nPerform mood analysis based on the conversation above."
+            buildPrompt(conversationHistory,userInput) + "\nPerform mood analysis based on the conversation above."
         } else {
-            buildPrompt(conversationHistory)
+            buildPrompt(conversationHistory,userInput)
         }
 
         val url = "$baseUrl?key=$apiKey"
@@ -54,13 +54,13 @@ class GeminiAPI {
 
         client.newCall(request).enqueue(object : okhttp3.Callback {
             override fun onFailure(call: Call, e: IOException) {
-                callback.onFailure(IOException("Error: Unable to connect to Gemini API. Details: ${e.message}"))
+                callback.onFailure(IOException("Error: Unable to connect to API. Details: ${e.message}"))
             }
 
             override fun onResponse(call: Call, response: Response) {
                 try {
                     if (!response.isSuccessful) {
-                        callback.onFailure(IOException("Error: Failed to get response from Gemini API (HTTP ${response.code})"))
+                        callback.onFailure(IOException("Error: Failed to get response from API (HTTP ${response.code})"))
                         return
                     }
 
@@ -71,7 +71,7 @@ class GeminiAPI {
                         val reply = parseResponse(responseBodyString)
                         callback.onSuccess(reply)
                     } else {
-                        callback.onFailure(IOException("Error: Empty response from Gemini API"))
+                        callback.onFailure(IOException("Error: Empty response from API"))
                     }
 
                 } catch (e: Exception) {
@@ -81,17 +81,29 @@ class GeminiAPI {
         })
     }
 
-    private fun buildPrompt(conversationHistory: String): String {
+    private fun buildPrompt(conversationHistory: String, latestInput: String): String {
         val systemPrompt = """
-        You are a conversational AI assistant. Your goal is to understand the user's mood through natural conversation. 
-        Do not ask the same question repeatedly. Vary your responses and engage in a realistic conversation.
-        Only perform mood analysis when the conversation ends or the user explicitly signals the conversation is over.
-        When the user wishes to end the conversation remind the user to press Finish button to end it.
-        Provide the mood analysis in this format: Mood: [Mood Category]. The following are mood categories - Happy, Sad, Neutral, Angry, Surprise
+    You are a helpful and empathetic AI assistant. You are integrated in a mood predicting based music suggesting app.Prioritize responding to the user's current input while using the conversation history as context for understanding. Provide a relevant and engaging response to the latest input.
+    
+    Previous Conversation (for context):
+    $conversationHistory
+
+    User's Current Input:
+    $latestInput
+    
+    Note: 
+     1.Keep the replies very concise, be friendly and always ask questions to the user that relate to knowing about user's mood. don't repeat greetings.
+     2.Mood Analysis Trigger: Only perform mood analysis when the user explicitly signals the conversation is over or uses phrases like "analyze mood", "end conversation", "finish".
+     3.End Conversation Reminder: When the user indicates they want to end the conversation, gently remind them to press the "Finish" button to finalize the mood analysis. Phrase this as a suggestion, not a command. For example, "To get your mood analysis, please press the 'Finish' button."
+     4.Mood Analysis Format: When performing mood analysis, provide the result in the following format: "Mood: [Mood Category]". The mood categories are: Happy, Sad, Neutral, Angry, Surprise. That's it no other explanation is required.
+     5.To do mood analysis if the user has explicitly mentioned that he wants a particular type of music then change the category accordingly irrespective of the mood you analysed.
+     6.Consistent Tone: Maintain a friendly, supportive, and empathetic tone throughout the conversation.
+     7.Don't repeat your questions. If you see the user is not answering certain questions, avoid asking similar questions.
     """.trimIndent()
 
-        return "$systemPrompt\n$conversationHistory"
+        return systemPrompt
     }
+
 
     private fun parseResponse(response: String?): String {
         return try {
@@ -141,7 +153,7 @@ class GeminiAPI {
         return if (matcher.find()) {
             matcher.group(1)?.capitalize()
         } else {
-            "Unknown" // Default value
+            "Unknown"
         }
     }
 

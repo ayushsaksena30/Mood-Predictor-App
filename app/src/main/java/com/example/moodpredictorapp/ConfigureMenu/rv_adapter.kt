@@ -10,7 +10,7 @@ import com.example.moodpredictorapp.R
 
 class MyAdapter(
     private val itemList: List<Item>,
-    private val onClick: (String) -> Unit // Pass the item name instead of view and position
+    private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -29,7 +29,7 @@ class MyAdapter(
         holder.imageView.setImageResource(item.imageResId)
 
         holder.itemView.setOnClickListener {
-            onClick(item.text) // Pass the item name to the callback
+            onClick(item.text)
         }
     }
 

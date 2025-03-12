@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Mood Predictor</string>
     <string name="mood_predictor">Mood Predictor</string>
+    <string name="leave_type">Sick Leave</string>
+    <string name="application_status">Pending</string>
     <string name="configure_manually">Configure Manually</string>
     <string name="subhead">Let your mood predict the playlist!</string>
+    <string name="next">Next</string>
+    <string name="logo">logo</string>
+    <string name="select_your_mood">Select your Mood</string>
+    <string name="mood_display">Sample Text</string>
     <string name="place_your_face_inside_the_box">Place your face inside the box :</string>
+    <string name="wait_message">Please wait a moment before sending another message.</string>
+    <string name="analyzing_mood">Analyzing overall mood based on our conversation…</string>
+    <string name="no_conversation">No conversation history to analyze mood.</string>
+    <string name="mood_analysis_failed">Failed to analyze mood. Please try again.</string>
 </resources>

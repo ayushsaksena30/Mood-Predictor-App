@@ -25,6 +25,7 @@
             android:layout_margin="40dp"
             android:text="@string/select_your_mood"
             android:textSize="28sp"
+            android:textColor="@color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

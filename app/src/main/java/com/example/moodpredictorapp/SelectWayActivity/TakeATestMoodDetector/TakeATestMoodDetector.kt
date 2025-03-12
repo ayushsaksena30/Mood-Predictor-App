@@ -1,13 +1,15 @@
 package com.example.moodpredictorapp.SelectWayActivity.TakeATestMoodDetector
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.moodpredictorapp.ConfigureMenuResult.SelectedMoodResult
@@ -20,7 +22,7 @@ class TakeATestMoodDetector : AppCompatActivity() {
     private lateinit var ivTwo: ImageView
     private lateinit var ivThree: ImageView
     private lateinit var ivFour: ImageView
-    private lateinit var progressBar: ProgressBar // Added ProgressBar
+    private lateinit var progressBar: ProgressBar
 
     private val answers = mutableListOf<Int>()
     private var questionIndex = 0
@@ -37,6 +39,7 @@ class TakeATestMoodDetector : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_take_atest_mood_detector)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -57,24 +60,27 @@ class TakeATestMoodDetector : AppCompatActivity() {
         tvSelectMethod.text = questions[questionIndex]
         progressBar.progress = questionIndex
 
-        ivOne.setOnClickListener {
-            answers.add(R.color.yellow)
-            nextQuestion()
-        }
+        setupTouchListener(ivOne, R.color.yellow)
+        setupTouchListener(ivTwo, R.color.blue)
+        setupTouchListener(ivThree, R.color.red)
+        setupTouchListener(ivFour, R.color.grey)
+    }
 
-        ivTwo.setOnClickListener {
-            answers.add(R.color.blue)
-            nextQuestion()
-        }
-
-        ivThree.setOnClickListener {
-            answers.add(R.color.red)
-            nextQuestion()
-        }
-
-        ivFour.setOnClickListener {
-            answers.add(R.color.grey)
-            nextQuestion()
+    private fun setupTouchListener(imageView: ImageView, color: Int) {
+        imageView.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    v.alpha = 0.5f
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    v.alpha = 1.0f
+                    if (event.action == MotionEvent.ACTION_UP) {
+                        answers.add(color)
+                        nextQuestion()
+                    }
+                }
+            }
+            true
         }
     }
 
@@ -82,7 +88,7 @@ class TakeATestMoodDetector : AppCompatActivity() {
         questionIndex++
         if (questionIndex < questions.size) {
             tvSelectMethod.text = questions[questionIndex]
-            progressBar.progress = questionIndex // Update progress
+            progressBar.progress = questionIndex
         } else {
             analyzeColorResponses()
         }
@@ -92,7 +98,7 @@ class TakeATestMoodDetector : AppCompatActivity() {
         questionIndex--
         if (questionIndex >= 0) {
             tvSelectMethod.text = questions[questionIndex]
-            progressBar.progress = questionIndex // Update progress
+            progressBar.progress = questionIndex
         } else {
             finish()
         }

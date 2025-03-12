@@ -5,7 +5,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
-import android.util.Log
 
 class GeminiImageAPI {
 
@@ -15,7 +14,7 @@ class GeminiImageAPI {
         .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
         .build()
 
-    private val apiKey = "YOUR_API" // Replace with your actual API key
+    private val apiKey = "YOUR_KEY" // Replace with your actual API key
     private val baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
 
     fun analyzeImage(imageData: String, callback: ResponseCallback) {
@@ -46,7 +45,6 @@ class GeminiImageAPI {
         }
 
         val body = RequestBody.create("application/json".toMediaType(), requestBodyJson.toString())
-        Log.d("GeminiAPI", "Request Body: ${requestBodyJson.toString()}")
         val request = Request.Builder()
             .url(url)
             .post(body)
@@ -54,16 +52,14 @@ class GeminiImageAPI {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                Log.e("GeminiAPI", "API request failed: ${e.message}")
-                callback.onFailure(IOException("Error: Unable to connect to Gemini API. Details: ${e.message}"))
+                callback.onFailure(IOException("Error: Unable to connect to API. Details: ${e.message}"))
             }
 
             override fun onResponse(call: Call, response: Response) {
                 try {
                     if (!response.isSuccessful) {
                         val errorBody = response.body?.string() ?: "No error body"
-                        Log.e("GeminiAPI", "HTTP ${response.code} - Error body: $errorBody")
-                        callback.onFailure(IOException("Error: Failed to get response from Gemini API (HTTP ${response.code}). Error body: $errorBody"))
+                        callback.onFailure(IOException("Error: Failed to get response from API (HTTP ${response.code}). Error body: $errorBody"))
                         return
                     }
 
@@ -74,12 +70,10 @@ class GeminiImageAPI {
                         val reply = parseResponse(responseBodyString)
                         callback.onSuccess(reply)
                     } else {
-                        Log.e("GeminiAPI", "Empty response body")
-                        callback.onFailure(IOException("Error: Empty response from Gemini API"))
+                        callback.onFailure(IOException("Error: Empty response from API"))
                     }
 
                 } catch (e: Exception) {
-                    Log.e("GeminiAPI", "Exception in onResponse: ${e.message}")
                     callback.onFailure(IOException("Exception in onResponse: ${e.message}"))
                 }
             }

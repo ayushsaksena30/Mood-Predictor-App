@@ -7,4 +7,8 @@
     <color name="yellow">#FFFF6C</color>
     <color name="blue">#82B1FF</color>
     <color name="red">#F24435</color>
+    <color name="bright_yellow">#FFD180</color>
+    <color name="configure_menu_card_background">#EFE4DA</color>
+    <color name="first_color_btn_custom">#BEC5D5F6</color>
+    <color name="second_color_btn_custom">#F8DFCB</color>
 </resources>

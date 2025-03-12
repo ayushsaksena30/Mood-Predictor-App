@@ -2,6 +2,7 @@ package com.example.moodpredictorapp.ConfigureMenuResult
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,10 @@ class SelectedMoodResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selected_mood_result)
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                )
 
         val tvMood: TextView = findViewById(R.id.tv_mood)
         val btnNext: Button = findViewById(R.id.btn_next)
@@ -26,8 +31,8 @@ class SelectedMoodResult : AppCompatActivity() {
             tvMood.text = "No Mood Detected"
         }
 
-        val categories = listOf("Bollywood", "UK Pop", "American Pop")
-        val images = listOf(R.drawable.bollywood, R.drawable.uk, R.drawable.american)
+        val categories = listOf("Bollywood", "Pop", "Jazz", "Rock", "Classical", "EDM")
+        val images = listOf(R.drawable.bollywood, R.drawable.pop, R.drawable.jazz, R.drawable.rock_jpg, R.drawable.classical, R.drawable.edm)
 
         val swipeAdapter = SwipeAdapter(categories, images)
         viewPager.adapter = swipeAdapter

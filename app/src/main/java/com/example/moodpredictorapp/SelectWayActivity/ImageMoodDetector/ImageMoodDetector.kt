@@ -1,10 +1,14 @@
 package com.example.moodpredictorapp.SelectWayActivity.ImageMoodDetector
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Base64
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -38,6 +42,10 @@ class ImageMoodDetector : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_mood_detector)
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                )
 
         previewView = findViewById(R.id.cameraPreview)
         captureButton = findViewById(R.id.captureButton)
@@ -58,14 +66,19 @@ class ImageMoodDetector : AppCompatActivity() {
 
         captureButton.setOnClickListener {
             takePhoto()
+            setButtonInteraction(false)
         }
 
         btn_uploading.setOnClickListener {
+            setButtonInteraction(false)
             openGallery()
         }
     }
 
     private fun openGallery() {
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        cameraProviderFuture.get().unbindAll()
+
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
         }
@@ -75,13 +88,20 @@ class ImageMoodDetector : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            val selectedImageUri = data.data
+        if (requestCode == GALLERY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK && data != null) {
+                val selectedImageUri = data.data
 
-            if (selectedImageUri != null) {
-                val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(selectedImageUri))
-                val base64Image = encodeImageToBase64(bitmap)
-                sendImageToGemini(base64Image)
+                if (selectedImageUri != null) {
+                    val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(selectedImageUri))
+                    val base64Image = encodeImageToBase64(bitmap)
+                    sendImageToGemini(base64Image)
+                } else {
+                    setButtonInteraction(true)
+                }
+            } else {
+                startCamera()
+                setButtonInteraction(true)
             }
         }
     }
@@ -122,6 +142,7 @@ class ImageMoodDetector : AppCompatActivity() {
 
                 override fun onError(exception: ImageCaptureException) {
                     Toast.makeText(applicationContext, "Failed to capture photo: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    setButtonInteraction(true)
                 }
             })
     }
@@ -129,9 +150,12 @@ class ImageMoodDetector : AppCompatActivity() {
     private fun sendImageToGemini(base64Image: String?) {
         if (base64Image == null) {
             Toast.makeText(this, "Base64 Encoding Failed", Toast.LENGTH_LONG).show()
+            setButtonInteraction(true)
             return
         }
 
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        cameraProviderFuture.get().unbindAll()
         currentBase64Image = base64Image
 
         val geminiAPI = GeminiImageAPI()
@@ -144,15 +168,49 @@ class ImageMoodDetector : AppCompatActivity() {
                     }
                     startActivity(intent)
                     overridePendingTransition(R.anim.slide_up, 0)
+                    setButtonInteraction(true)
                 }
             }
 
             override fun onFailure(exception: IOException) {
                 runOnUiThread {
-                    Toast.makeText(applicationContext, "Gemini API Error: ${exception.message}", Toast.LENGTH_LONG).show()
+                    if (isInternetUnavailable(applicationContext)) {
+                        Toast.makeText(applicationContext, "Connect to the internet and try again", Toast.LENGTH_LONG).show()
+                    } else if (exception.message?.contains("busy", ignoreCase = true) == true || exception.message?.contains("server", ignoreCase = true) == true) {
+                        Toast.makeText(applicationContext, "Servers are busy right now, try again later", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(applicationContext, "API Error: ${exception.message}", Toast.LENGTH_LONG).show()
+                    }
+                    setButtonInteraction(true)
+
+                    startCamera()
+                }
+            }
+
+            private fun isInternetUnavailable(context: Context): Boolean {
+                val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val network = connectivityManager.activeNetwork ?: return true
+                val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return true
+
+                return when {
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> false
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> false
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> false
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> false
+                    else -> true
                 }
             }
         })
+    }
+
+    private fun setButtonInteraction(enable: Boolean) {
+        captureButton.isEnabled = enable
+        btn_uploading.isEnabled = enable
+        switchCameraButton.isEnabled = enable
+
+        captureButton.alpha = if (enable) 1f else 0.5f
+        btn_uploading.alpha = if (enable) 1f else 0.5f
+        switchCameraButton.alpha = if (enable) 1f else 0.5f
     }
 
     private fun encodeImageToBase64(bitmap: Bitmap): String? {
@@ -161,10 +219,10 @@ class ImageMoodDetector : AppCompatActivity() {
             val byteArrayOutputStream = ByteArrayOutputStream()
             resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream)
             val byteArray = byteArrayOutputStream.toByteArray()
-            return Base64.encodeToString(byteArray, Base64.NO_WRAP)
+            Base64.encodeToString(byteArray, Base64.NO_WRAP)
         } catch (e: Exception) {
             e.printStackTrace()
-            return null
+            null
         }
     }
 
@@ -178,5 +236,10 @@ class ImageMoodDetector : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startCamera()
     }
 }

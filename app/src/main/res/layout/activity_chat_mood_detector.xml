@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Send"
-                    android:textColor="@color/white"
+                    android:textColor="#FFFFFFFF"
                     android:background="@drawable/btn_custom"
                     android:backgroundTint="@color/material_dynamic_tertiary50"
                     android:padding="12dp"

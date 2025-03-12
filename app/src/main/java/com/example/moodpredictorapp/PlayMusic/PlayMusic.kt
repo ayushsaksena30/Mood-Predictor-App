@@ -3,9 +3,11 @@ package com.example.moodpredictorapp.PlayMusic
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.example.moodpredictorapp.MainActivity.MainActivity
 import com.example.moodpredictorapp.R
 
 class PlayMusic : AppCompatActivity() {
@@ -13,18 +15,25 @@ class PlayMusic : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_music)
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                )
 
         val moodTextView = findViewById<TextView>(R.id.moodTextView)
         val subcatMood = findViewById<TextView>(R.id.subcatMood)
         val appleMusicButton = findViewById<AppCompatButton>(R.id.appleMusicButton)
         val spotifyButton = findViewById<AppCompatButton>(R.id.spotifyButton)
         val youtubeButton = findViewById<AppCompatButton>(R.id.youtubeButton)
+        val homebutton = findViewById<AppCompatButton>(R.id.homebutton)
 
-        val mood = intent.getStringExtra("mood")
+        var mood = intent.getStringExtra("mood")
         var selectedCategory = intent.getStringExtra("selected_category")
         if(selectedCategory==null) selectedCategory=""
         moodTextView.text = "Your Mood: $mood"
         subcatMood.text = "Subcategory: $selectedCategory"
+
+        if(mood=="Neutral") mood=""
 
         appleMusicButton.setOnClickListener {
             launchAppleMusic(mood+" "+selectedCategory)
@@ -36,6 +45,12 @@ class PlayMusic : AppCompatActivity() {
 
         youtubeButton.setOnClickListener {
             launchYouTubeMusic(mood+" "+selectedCategory)
+        }
+
+        homebutton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_up, 0)
         }
     }
 

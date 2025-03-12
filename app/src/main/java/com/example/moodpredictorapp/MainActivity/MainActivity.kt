@@ -17,6 +17,7 @@ import com.example.moodpredictorapp.SelectWayActivity.SelectWay
 class MainActivity : AppCompatActivity() {
 
     private val CAMERA_PERMISSION_REQUEST_CODE = 100
+    private var permissionGrantedToastShown = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +50,6 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(Manifest.permission.CAMERA),
                 CAMERA_PERMISSION_REQUEST_CODE
             )
-        } else {
-            Toast.makeText(this, "Camera permission already granted", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -63,9 +62,13 @@ class MainActivity : AppCompatActivity() {
 
         if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Camera permission granted", Toast.LENGTH_SHORT).show()
+                if (!permissionGrantedToastShown) {
+                    Toast.makeText(this, "Camera permission granted", Toast.LENGTH_SHORT).show()
+                    permissionGrantedToastShown = true;
+                }
             } else {
                 Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show()
+                permissionGrantedToastShown = false;
             }
         }
     }

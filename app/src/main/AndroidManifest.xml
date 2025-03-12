@@ -6,6 +6,7 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,36 +21,53 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoodPredictorApp"
         tools:targetApi="31" >
+
         <activity
             android:name=".PlayMusic.PlayMusic"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
+
         <activity
             android:name=".SelectWayActivity.TakeATestMoodDetector.TakeATestMoodDetector"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
+
         <activity
             android:name=".SelectWayActivity.ChatMoodDetector.ChatMoodDetector"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
+
         <activity
             android:name=".SelectWayActivity.SelectWay"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
+
         <activity
             android:name=".ConfigureMenuResult.SelectedMoodResult"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
+
         <activity
             android:name=".SelectWayResult.PredictedImageMoodResult"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
+
         <activity
             android:name=".SelectWayActivity.ImageMoodDetector.ImageMoodDetector"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
+
         <activity
             android:name=".ConfigureMenu.ConfigureMenu"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
+
         <activity
             android:name=".MainActivity.MainActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:theme="@style/Theme.MoodPredictorApp.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
