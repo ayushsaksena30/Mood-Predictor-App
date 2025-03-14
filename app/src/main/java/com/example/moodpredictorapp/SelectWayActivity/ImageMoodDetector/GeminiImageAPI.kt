@@ -18,7 +18,8 @@ class GeminiImageAPI {
     private val baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
 
     fun analyzeImage(imageData: String, callback: ResponseCallback) {
-        val prompt = "Classify the emotion of the person in the image as one of the following: Happy, Sad, Neutral, Angry, or Surprised. Respond with only the emotion category."
+        val prompt = "Classify the emotion of the person in the image as one of the following: Happy, Sad, Neutral, Angry, or Surprised. Respond with only the emotion category." +
+                "In no case shall you not respond with the emotion category."
 
         val url = "$baseUrl?key=$apiKey"
         val requestBodyJson = JSONObject().apply {

@@ -6,4 +6,5 @@
         android:endColor="@color/second_color_btn_custom"
         android:type="linear"/>
     <corners android:radius="12dp"/>
+    <stroke android:width="2dp" android:color="#003E4F" />
 </shape>

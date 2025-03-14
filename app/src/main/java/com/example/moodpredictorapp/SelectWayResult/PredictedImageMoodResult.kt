@@ -49,13 +49,13 @@ class PredictedImageMoodResult : AppCompatActivity() {
 
         if (!geminiResponse.isNullOrEmpty()) {
             mood = geminiResponse
-            moodTextView.text = "Mood: $geminiResponse"
+            moodTextView.text = "$geminiResponse"
         } else {
-            moodTextView.text = "Mood: Unable to determine mood."
+            moodTextView.text = "Unable to determine mood."
         }
 
         val categories = listOf("Bollywood", "Pop", "Jazz", "Rock", "Classical", "EDM")
-        val images = listOf(R.drawable.bollywood, R.drawable.pop, R.drawable.jazz, R.drawable.rock_jpg, R.drawable.classical, R.drawable.edm)
+        val images = listOf(R.drawable.bollywood, R.drawable.pop, R.drawable.jazz, R.drawable.rock, R.drawable.classical, R.drawable.edm)
 
         val swipeAdapter = SwipeAdapter(categories, images)
         viewPager.adapter = swipeAdapter

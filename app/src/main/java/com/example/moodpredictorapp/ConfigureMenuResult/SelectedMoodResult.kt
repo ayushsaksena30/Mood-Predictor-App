@@ -32,7 +32,7 @@ class SelectedMoodResult : AppCompatActivity() {
         }
 
         val categories = listOf("Bollywood", "Pop", "Jazz", "Rock", "Classical", "EDM")
-        val images = listOf(R.drawable.bollywood, R.drawable.pop, R.drawable.jazz, R.drawable.rock_jpg, R.drawable.classical, R.drawable.edm)
+        val images = listOf(R.drawable.bollywood, R.drawable.pop, R.drawable.jazz, R.drawable.rock, R.drawable.classical, R.drawable.edm)
 
         val swipeAdapter = SwipeAdapter(categories, images)
         viewPager.adapter = swipeAdapter

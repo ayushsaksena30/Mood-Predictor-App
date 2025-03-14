@@ -35,7 +35,7 @@ class ImageMoodDetector : AppCompatActivity() {
     private lateinit var btn_uploading: Button
     private lateinit var switchCameraButton: Button
     private lateinit var cameraExecutor: ExecutorService
-    private var cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+    private var cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
     private var imageCapture: ImageCapture? = null
     private var currentBase64Image: String? = null
 

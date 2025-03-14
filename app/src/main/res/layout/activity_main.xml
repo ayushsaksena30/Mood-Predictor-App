@@ -23,31 +23,32 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_configure"
-        android:layout_width="170dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
-        android:background="@drawable/btn_custom"
-        android:padding="12dp"
+        android:background="@drawable/test_btn"
+        android:padding="16dp"
         android:text="@string/configure_manually"
         android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="18dp"
+        android:textColor="#000000"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_next"
-        android:layout_width="170dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:text="@string/next"
+        android:textColor="#000000"
+        android:background="@drawable/test_btn"
         app:layout_constraintBottom_toTopOf="@id/btn_configure"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/black"
-        android:background="@drawable/btn_custom"
         app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/textView"
@@ -66,14 +67,14 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="100dp"
         android:contentDescription="@string/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="100dp"
         app:srcCompat="@drawable/logo" />
 
 

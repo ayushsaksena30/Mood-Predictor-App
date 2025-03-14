@@ -11,4 +11,5 @@
     <color name="configure_menu_card_background">#C0B8B0</color>
     <color name="first_color_btn_custom">#BEAEBBD5</color>
     <color name="second_color_btn_custom">#D0BAA8</color>
+    <color name="test_btn_color">#FAF0E6</color>
 </resources>
