@@ -25,46 +25,55 @@
         <activity
             android:name=".PlayMusic.PlayMusic"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
 
         <activity
             android:name=".SelectWayActivity.TakeATestMoodDetector.TakeATestMoodDetector"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
 
         <activity
             android:name=".SelectWayActivity.ChatMoodDetector.ChatMoodDetector"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
 
         <activity
             android:name=".SelectWayActivity.SelectWay"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
 
         <activity
             android:name=".ConfigureMenuResult.SelectedMoodResult"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
 
         <activity
             android:name=".SelectWayResult.PredictedImageMoodResult"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
 
         <activity
             android:name=".SelectWayActivity.ImageMoodDetector.ImageMoodDetector"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
 
         <activity
             android:name=".ConfigureMenu.ConfigureMenu"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MoodPredictorApp.NoActionBar" />
 
         <activity
             android:name=".MainActivity.MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MoodPredictorApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
