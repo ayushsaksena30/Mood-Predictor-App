@@ -9,6 +9,7 @@
     tools:context=".SelectWayActivity.SelectWay">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginVertical="40dp"
@@ -22,6 +23,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:src="@drawable/left_arrow"
+                android:padding="12dp"
+                android:layout_margin="28dp"
+                android:scaleType="fitCenter"
+                android:background="@drawable/test_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/tv_selectmethod"
@@ -39,12 +52,12 @@
 
             <TextView
                 android:id="@+id/tv_chat"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="128dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginBottom="48dp"
                 android:fontFamily="sans-serif-black"
                 android:padding="12sp"
                 android:text="Chat"
@@ -52,16 +65,15 @@
                 android:background="@color/background_app"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_selectmethod" />
+                app:layout_constraintBottom_toTopOf="@id/tv_image"/>
 
             <TextView
                 android:id="@+id/tv_image"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginHorizontal="40dp"
                 android:fontFamily="sans-serif-black"
                 android:padding="12sp"
                 android:text="Image"
@@ -69,15 +81,16 @@
                 android:background="@color/background_app"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_chat" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_takeatest"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="40dp"
                 android:layout_marginTop="48dp"
                 android:fontFamily="sans-serif-black"
                 android:padding="12sp"

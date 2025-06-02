@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    namespace = "com.example.moodpredictorapp"
+    namespace = "com.saksena.moodpredictorapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.moodpredictorapp"
+        applicationId = "com.saksena.moodpredictorapp"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

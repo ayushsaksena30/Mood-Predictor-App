@@ -37,6 +37,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <TextView
+                android:id="@+id/tv_welcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To begin chatting with the chatbot, Please send a message. \n\nAlways remember you can end the conversation by pressing on the top END button."
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/grey"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_chat"
                 android:layout_width="0dp"
@@ -78,6 +91,7 @@
                     android:layout_height="wrap_content"
                     android:text="Send"
                     android:textColor="#000000"
+                    android:textSize="16dp"
                     android:background="@drawable/test_btn"
                     android:padding="12dp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -87,25 +101,38 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_finish"
+                android:id="@+id/btn_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Finish"
-                android:textColor="#000000"
-                android:background="@drawable/test_btn"
+                android:text="END"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp"
+                android:background="@drawable/btn_end"
                 android:padding="12dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:src="@drawable/left_arrow"
+                android:padding="12dp"
+                android:scaleType="fitCenter"
+                android:background="@drawable/test_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/btn_finish"
-                app:layout_constraintStart_toStartOf="@id/btn_finish"
-                app:layout_constraintEnd_toEndOf="@id/btn_finish"
-                app:layout_constraintBottom_toTopOf="@id/btn_finish"/>
+                app:layout_constraintTop_toBottomOf="@id/btn_end"
+                app:layout_constraintStart_toStartOf="@id/btn_end"
+                app:layout_constraintEnd_toEndOf="@id/btn_end"
+                app:layout_constraintBottom_toTopOf="@id/btn_end"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
