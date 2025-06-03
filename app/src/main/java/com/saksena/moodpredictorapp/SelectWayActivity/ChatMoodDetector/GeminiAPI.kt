@@ -23,7 +23,7 @@ class GeminiAPI {
         addToConversationHistory("User", userInput)
 
         val prompt = if (isAnalyzingMood) {
-            buildPrompt(conversationHistory,userInput) + "\nPerform mood analysis based on the conversation above."
+            analyzePrompt(conversationHistory)
         } else {
             buildPrompt(conversationHistory,userInput)
         }
@@ -80,10 +80,26 @@ class GeminiAPI {
             }
         })
     }
+    private fun analyzePrompt(conversationHistory: String): String{
+        val systemPrompt = """
+    You are a helpful and empathetic AI assistant. You are integrated in a mood predicting based music suggesting app. Analyze user's mood based on the context provided and return answer in the format provided only.
+    
+    Previous Conversation (for context):
+    $conversationHistory
+    
+    Return Answer in this format only- 
+    "Mood: [Mood Category]". The mood categories are: Happy, Sad, Neutral, Angry, Surprise. That's it no other explanation is required along with it.
+    
+    Note-
+    If the user has explicitly mentioned that he wants a particular type of music then change the category accordingly irrespective of the mood you analysed.
+    """.trimIndent()
+
+        return systemPrompt
+    }
 
     private fun buildPrompt(conversationHistory: String, latestInput: String): String {
         val systemPrompt = """
-    You are a helpful and empathetic AI assistant. You are integrated in a mood predicting based music suggesting app.Prioritize responding to the user's current input while using the conversation history as context for understanding. Provide a relevant and engaging response to the latest input.
+    You are a helpful and empathetic AI assistant. You are integrated in a mood predicting based music suggesting app. Provide a relevant and engaging response to the latest input.
     
     Previous Conversation (for context):
     $conversationHistory
@@ -93,12 +109,11 @@ class GeminiAPI {
     
     Note: 
      1.Keep the replies very concise, be friendly and always ask questions to the user that relate to knowing about user's mood. don't repeat greetings.
-     2.Mood Analysis Trigger: Only perform mood analysis when the user explicitly signals the conversation is over or uses phrases like "analyze mood", "end conversation", "finish".
-     3.End Conversation Reminder: When the user indicates they want to end the conversation, gently remind them to press the "Finish" button to finalize the mood analysis. Phrase this as a suggestion, not a command. For example, "To get your mood analysis, please press the 'Finish' button."
-     4.Mood Analysis Format: When performing mood analysis, provide the result in the following format: "Mood: [Mood Category]". The mood categories are: Happy, Sad, Neutral, Angry, Surprise. That's it no other explanation is required.
-     5.To do mood analysis if the user has explicitly mentioned that he wants a particular type of music then change the category accordingly irrespective of the mood you analysed.
-     6.Consistent Tone: Maintain a friendly, supportive, and empathetic tone throughout the conversation.
-     7.Don't repeat your questions. If you see the user is not answering certain questions, avoid asking similar questions.
+     2.When the user gives one reason for why he's feeling a certain way or explicitly signals the conversation is over or uses phrases like "analyze mood", "end conversation", "finish", gently remind them to press the "End" button to finalize the mood analysis.
+     3.When the user is no longer sharing anything except yes/no, gently remind them to press the "End" button to finalize the mood analysis. Phrase this as a suggestion, not a command. For example, "To get your mood analysis, please press the 'End' button."
+     4.Don't repeat questions, Don't ask similar questions.
+     5.Strictly keep your reply under 20 words.
+     6.Don't just reply to the current input, reply by thinking current input as continuation of previous conversation.
     """.trimIndent()
 
         return systemPrompt

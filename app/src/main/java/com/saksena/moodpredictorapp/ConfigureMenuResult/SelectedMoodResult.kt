@@ -52,5 +52,23 @@ class SelectedMoodResult : AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_up, 0)
         }
+
+        viewPager.post {
+            simulateViewPagerHint(viewPager)
+        }
+    }
+
+    private fun simulateViewPagerHint(viewPager: ViewPager2) {
+        val delayMillis = 1000L
+        val originalItem = viewPager.currentItem
+        val itemCount = viewPager.adapter?.itemCount ?: return
+
+        viewPager.postDelayed({
+            viewPager.setCurrentItem((originalItem + 1) % itemCount, true)
+
+            viewPager.postDelayed({
+                viewPager.setCurrentItem(originalItem, true)
+            }, delayMillis)
+        }, delayMillis)
     }
 }

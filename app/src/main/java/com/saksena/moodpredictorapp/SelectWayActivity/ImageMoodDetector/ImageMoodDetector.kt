@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.Image
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
@@ -35,6 +36,7 @@ class ImageMoodDetector : AppCompatActivity() {
     private lateinit var captureButton: Button
     private lateinit var btn_uploading: Button
     private lateinit var switchCameraButton: Button
+    private lateinit var btnBack: ImageButton
     private lateinit var cameraExecutor: ExecutorService
     private var cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
     private var imageCapture: ImageCapture? = null
@@ -52,7 +54,7 @@ class ImageMoodDetector : AppCompatActivity() {
         captureButton = findViewById(R.id.captureButton)
         switchCameraButton = findViewById(R.id.switchCameraButton)
         btn_uploading = findViewById(R.id.btn_uploadimg)
-        val btnBack: ImageButton = findViewById(R.id.btn_back)
+        btnBack = findViewById(R.id.btn_back)
 
         btnBack.setOnClickListener {
             finish()
@@ -212,7 +214,9 @@ class ImageMoodDetector : AppCompatActivity() {
         captureButton.isEnabled = enable
         btn_uploading.isEnabled = enable
         switchCameraButton.isEnabled = enable
+        btnBack.isEnabled = enable
 
+        btnBack.alpha = if (enable) 1f else 0.5f
         captureButton.alpha = if (enable) 1f else 0.5f
         btn_uploading.alpha = if (enable) 1f else 0.5f
         switchCameraButton.alpha = if (enable) 1f else 0.5f

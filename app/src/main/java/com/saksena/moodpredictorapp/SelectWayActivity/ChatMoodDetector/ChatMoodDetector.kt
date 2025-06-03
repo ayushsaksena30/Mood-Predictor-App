@@ -24,7 +24,8 @@ class ChatMoodDetector : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var messageInput: EditText
-    private lateinit var sendButton: Button
+    private lateinit var sendButton: ImageButton
+    private lateinit var btnBack: ImageButton
     private lateinit var btnEnd: Button
     private lateinit var chatAdapter: ChatAdapter
     private val chatMessages = mutableListOf<ChatMessage>()
@@ -46,7 +47,7 @@ class ChatMoodDetector : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         btnEnd.isEnabled = false
         btnEnd.alpha = 0.5f
-        val btnBack: ImageButton = findViewById(R.id.btn_back)
+        btnBack = findViewById(R.id.btn_back)
         btnBack.setOnClickListener {
             finish()
         }
@@ -54,6 +55,19 @@ class ChatMoodDetector : AppCompatActivity() {
         chatAdapter = ChatAdapter(chatMessages)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = chatAdapter
+        sendButton.isEnabled = false
+        sendButton.alpha = 0.5f
+        messageInput.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val isNotEmpty = !s.isNullOrBlank()
+                sendButton.isEnabled = isNotEmpty
+                sendButton.alpha = if (isNotEmpty) 1.0f else 0.5f // 1.0 = visible, 0.5 = faded look
+            }
+
+            override fun afterTextChanged(s: android.text.Editable?) {}
+        })
 
         sendButton.setOnClickListener {
             sendMessage()
@@ -72,6 +86,9 @@ class ChatMoodDetector : AppCompatActivity() {
             handleUserMessage("Analyze mood", true)
             btnEnd.isEnabled = false
             btnEnd.alpha = 0.5f
+
+            btnBack.isEnabled = false
+            btnBack.alpha = 0.5f
         }
     }
 
@@ -96,7 +113,7 @@ class ChatMoodDetector : AppCompatActivity() {
     }
 
     private fun handleUserMessage(message: String, isAnalyzingMood: Boolean) {
-        progressBar.visibility = ProgressBar.VISIBLE
+        progressBar.visibility = View.VISIBLE
 
         if (isAnalyzingMood) {
             addMessage(getString(R.string.analyzing_mood), isUser = false)
@@ -107,7 +124,7 @@ class ChatMoodDetector : AppCompatActivity() {
         geminiAPI.generateReply(message, isAnalyzingMood, object : ResponseCallback {
             override fun onSuccess(response: String) {
                 runOnUiThread {
-                    progressBar.visibility = ProgressBar.GONE
+                    progressBar.visibility = View.GONE
 
                     if (isAnalyzingMood) {
                         val moodCategories = listOf("Happy", "Sad", "Neutral", "Angry", "Surprise")
@@ -122,10 +139,14 @@ class ChatMoodDetector : AppCompatActivity() {
                             overridePendingTransition(R.anim.slide_up, 0)
                             btnEnd.isEnabled = true
                             btnEnd.alpha = 1.0f
+                            btnBack.isEnabled = true
+                            btnBack.alpha = 1.0f
                         } else {
                             addMessage(response, isUser = false)
                             btnEnd.isEnabled = true
                             btnEnd.alpha = 1.0f
+                            btnBack.isEnabled = true
+                            btnBack.alpha = 1.0f
                         }
                     } else {
                         addMessage(response, isUser = false)
@@ -135,7 +156,7 @@ class ChatMoodDetector : AppCompatActivity() {
 
             override fun onFailure(exception: IOException) {
                 runOnUiThread {
-                    progressBar.visibility = ProgressBar.GONE
+                    progressBar.visibility = View.GONE
                     btnEnd.isEnabled = true
                     btnEnd.alpha = 1.0f
 

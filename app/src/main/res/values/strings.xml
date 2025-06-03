@@ -3,7 +3,7 @@
     <string name="mood_predictor">Mood Predictor</string>
     <string name="leave_type">Sick Leave</string>
     <string name="application_status">Pending</string>
-    <string name="configure_manually">Configure Manually</string>
+    <string name="configure_manually">Select Manually</string>
     <string name="subhead">Let your mood predict the playlist!</string>
     <string name="next">Next</string>
     <string name="logo">logo</string>

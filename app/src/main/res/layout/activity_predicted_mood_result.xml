@@ -63,16 +63,21 @@
 
                     <ImageView
                         android:id="@+id/iv_imageshow"
-                        android:layout_width="250dp"
-                        android:layout_height="250dp"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
+                        android:layout_marginTop="16dp"
+                        android:scaleX="-1"
+                        android:scaleType="fitCenter"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_moodPredicted" />
 
                     <TextView
                         android:id="@+id/tv_mood"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
+                        android:layout_marginHorizontal="50dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
                         android:fontFamily="sans-serif-black"
                         android:padding="12sp"
                         android:textAlignment="center"

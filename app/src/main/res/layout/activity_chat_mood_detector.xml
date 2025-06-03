@@ -41,7 +41,7 @@
                 android:id="@+id/tv_welcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="To begin chatting with the chatbot, Please send a message. \n\nAlways remember you can end the conversation by pressing on the top END button."
+                android:text="To begin chatting with the chatbot, Please send a message like, Hi ! 🙋🏼‍♂️ I just made pasta\n\nAlways remember you can end the conversation anytime by pressing the END button."
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/grey"
@@ -85,15 +85,14 @@
                     app:layout_constraintEnd_toStartOf="@id/btn_send"
                     android:layout_marginEnd="8dp" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <ImageButton
                     android:id="@+id/btn_send"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Send"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:background="@drawable/test_btn"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/send"
                     android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    android:background="@drawable/test_btn"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
