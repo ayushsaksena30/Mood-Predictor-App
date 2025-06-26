@@ -1,15 +1,21 @@
 package com.saksena.moodpredictorapp.ConfigureMenuResult
 
+import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.saksena.moodpredictorapp.PlayMusic.PlayMusic
 import com.saksena.moodpredictorapp.R
+import androidx.core.net.toUri
 
 class SelectedMoodResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +30,11 @@ class SelectedMoodResult : AppCompatActivity() {
         val btnNext: Button = findViewById(R.id.btn_next)
         val viewPager: ViewPager2 = findViewById(R.id.viewPager)
         val btnBack: ImageButton = findViewById(R.id.btn_back)
+
+        val btnReport: Button = findViewById(R.id.btnReport)
+        btnReport.setOnClickListener {
+            showReportDialog()
+        }
 
         btnBack.setOnClickListener {
             finish()
@@ -70,5 +81,47 @@ class SelectedMoodResult : AppCompatActivity() {
                 viewPager.setCurrentItem(originalItem, true)
             }, delayMillis)
         }, delayMillis)
+    }
+
+    private fun Context.showReportDialog() {
+        val reportOptions = arrayOf(
+            "Report Issue",
+            "Flag Response",
+            "Report Inappropriate Content",
+            "Report Bug"
+        )
+
+        var selectedOption = reportOptions[0]
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Select a reason")
+
+        builder.setSingleChoiceItems(reportOptions, 0) { _, which ->
+            selectedOption = reportOptions[which]
+        }
+
+        builder.setPositiveButton("Submit") { dialog, _ ->
+            val subject = "Hey Dev! I want to $selectedOption in your App."
+            val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+                data = "mailto:".toUri()
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("saksenaaayush5@gmail.com"))
+                putExtra(Intent.EXTRA_SUBJECT, subject)
+                putExtra(Intent.EXTRA_TEXT, "Please describe the issue in more detail here...")
+            }
+
+            try {
+                startActivity(Intent.createChooser(emailIntent, "Send email..."))
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(this, "No email app found.", Toast.LENGTH_SHORT).show()
+            }
+
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
     }
 }
